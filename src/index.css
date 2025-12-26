@@ -1,0 +1,179 @@
+/* ============================================================================
+   SHOREBREAK AI - STYLES GLOBAUX
+   ============================================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------------------------------------------------
+   Variables CSS
+   ---------------------------------------------------------------------------- */
+
+:root {
+  --color-primary: #2563eb;
+  --color-background: #fafafa;
+}
+
+/* ----------------------------------------------------------------------------
+   Base Styles
+   ---------------------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-[#FAFAFA] text-slate-900 antialiased;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ----------------------------------------------------------------------------
+   Animations
+   ---------------------------------------------------------------------------- */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------------------------
+   Custom Scrollbar
+   ---------------------------------------------------------------------------- */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* ----------------------------------------------------------------------------
+   Form Elements
+   ---------------------------------------------------------------------------- */
+
+input[type="checkbox"] {
+  @apply rounded border-slate-300 text-blue-600 focus:ring-blue-500 focus:ring-offset-0;
+}
+
+select {
+  @apply cursor-pointer;
+}
+
+/* ----------------------------------------------------------------------------
+   Focus States
+   ---------------------------------------------------------------------------- */
+
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* ----------------------------------------------------------------------------
+   Transitions
+   ---------------------------------------------------------------------------- */
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* ----------------------------------------------------------------------------
+   Print Styles
+   ---------------------------------------------------------------------------- */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Recharts Customization
+   ---------------------------------------------------------------------------- */
+
+.recharts-tooltip-wrapper {
+  z-index: 100;
+}
+
+.recharts-default-tooltip {
+  @apply rounded-lg shadow-lg border border-slate-200;
+}
