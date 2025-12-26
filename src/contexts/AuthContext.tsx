@@ -1,5 +1,5 @@
 // ============================================================================
-// SHOREBREAK AI - CONTEXTE D'AUTHENTIFICATION
+// SHOREBREAK AI - AUTHENTICATION CONTEXT
 // ============================================================================
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -8,11 +8,11 @@ import { supabase } from '../lib/supabase';
 import type { User, SignUpData, SignInData } from '../types';
 
 // ----------------------------------------------------------------------------
-// Types du contexte
+// Context Types
 // ----------------------------------------------------------------------------
 
 interface AuthContextType {
-  // État
+  // State
   user: SupabaseUser | null;
   profile: User | null;
   session: Session | null;
@@ -31,7 +31,7 @@ interface AuthContextType {
 }
 
 // ----------------------------------------------------------------------------
-// Création du contexte
+// Context Creation
 // ----------------------------------------------------------------------------
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Charger le profil utilisateur
+  // Load user profile
   const fetchProfile = async (userId: string) => {
     try {
       const { data, error } = await supabase
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error) throw error;
       setProfile(data);
     } catch (error) {
-      console.error('Erreur lors du chargement du profil:', error);
+      console.error('Error loading profile:', error);
       setProfile(null);
     }
   };
@@ -127,7 +127,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Connexion
+  // Sign in
   const signIn = async (data: SignInData): Promise<{ error: Error | null }> => {
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -212,7 +212,7 @@ export function useAuth() {
   const context = useContext(AuthContext);
   
   if (context === undefined) {
-    throw new Error('useAuth doit être utilisé dans un AuthProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   
   return context;

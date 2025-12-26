@@ -20,22 +20,22 @@ interface LoadingStateProps {
 
 const defaultPhases = {
   reviews: [
-    { text: 'Connexion aux sources de données...', duration: 5000 },
-    { text: 'Extraction des avis patients...', duration: 15000 },
-    { text: 'Analyse du sentiment avec IA...', duration: 25000 },
-    { text: 'Identification des tendances clés...', duration: 25000 },
-    { text: 'Génération des insights stratégiques...', duration: 30000 },
-    { text: 'Rédaction du rapport personnalisé...', duration: 40000 },
-    { text: 'Finalisation en cours...', duration: 60000 },
+    { text: 'Connecting to data sources...', duration: 5000 },
+    { text: 'Extracting patient reviews...', duration: 15000 },
+    { text: 'Running AI sentiment analysis...', duration: 25000 },
+    { text: 'Identifying key trends...', duration: 25000 },
+    { text: 'Generating strategic insights...', duration: 30000 },
+    { text: 'Writing personalized report...', duration: 40000 },
+    { text: 'Finalizing analysis...', duration: 60000 },
   ],
   seo: [
-    { text: 'Connexion au site web...', duration: 5000 },
-    { text: 'Exploration de l\'architecture du site...', duration: 20000 },
-    { text: 'Audit technique SEO en cours...', duration: 30000 },
-    { text: 'Analyse du contenu avec IA...', duration: 35000 },
-    { text: 'Évaluation des facteurs de ranking...', duration: 30000 },
-    { text: 'Génération des recommandations...', duration: 40000 },
-    { text: 'Finalisation du rapport...', duration: 60000 },
+    { text: 'Connecting to website...', duration: 5000 },
+    { text: 'Crawling site architecture...', duration: 20000 },
+    { text: 'Running technical SEO audit...', duration: 30000 },
+    { text: 'Analyzing content with AI...', duration: 35000 },
+    { text: 'Evaluating ranking factors...', duration: 30000 },
+    { text: 'Generating recommendations...', duration: 40000 },
+    { text: 'Finalizing report...', duration: 60000 },
   ],
 };
 
@@ -110,10 +110,10 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
 
       {/* Subtitle */}
       <p className="text-slate-500 text-sm text-center mb-2">
-        L'analyse prend généralement 2 à 3 minutes.
+        Analysis typically takes 2 to 3 minutes.
       </p>
       <p className="text-slate-400 text-xs text-center mb-8">
-        Ne fermez pas cet onglet • Temps écoulé : {formatTime(elapsedTime)}
+        Please don't close this tab • Elapsed: {formatTime(elapsedTime)}
       </p>
 
       {/* Progress Bar */}

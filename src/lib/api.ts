@@ -1,20 +1,20 @@
 // ============================================================================
-// SHOREBREAK AI - API CLIENT (WEBHOOKS N8N)
+// SHOREBREAK AI - API CLIENT (N8N WEBHOOKS)
 // ============================================================================
 
 import type { ReviewAnalysisInput, SEOAnalysisInput } from '../types';
 
-// URLs des webhooks n8n (PRODUCTION)
+// N8N webhook URLs (PRODUCTION)
 const N8N_WEBHOOKS = {
   reviews: 'https://shorebreak-ai.app.n8n.cloud/webhook/review-analysis',
   seo: 'https://shorebreak-ai.app.n8n.cloud/webhook/seo-audit',
 };
 
-// Timeout de 10 minutes pour les analyses longues (en ms)
+// 10 minute timeout for long analyses (in ms)
 const API_TIMEOUT = 10 * 60 * 1000;
 
 // ----------------------------------------------------------------------------
-// Helper: Fetch avec timeout
+// Helper: Fetch with timeout
 // ----------------------------------------------------------------------------
 
 async function fetchWithTimeout(url: string, options: RequestInit, timeout: number): Promise<Response> {
@@ -31,7 +31,7 @@ async function fetchWithTimeout(url: string, options: RequestInit, timeout: numb
   } catch (error) {
     clearTimeout(timeoutId);
     if (error instanceof Error && error.name === 'AbortError') {
-      throw new Error('L\'analyse a pris trop de temps. Veuillez réessayer.');
+      throw new Error('Analysis timed out. Please try again.');
     }
     throw error;
   }
@@ -69,7 +69,7 @@ export async function runReviewAnalysis(input: ReviewAnalysisInput): Promise<{
     const executionTime = Date.now() - startTime;
 
     if (!response.ok) {
-      throw new Error(`Erreur HTTP: ${response.status}`);
+      throw new Error(`HTTP Error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -83,14 +83,14 @@ export async function runReviewAnalysis(input: ReviewAnalysisInput): Promise<{
     const executionTime = Date.now() - startTime;
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Une erreur est survenue',
+      error: error instanceof Error ? error.message : 'An error occurred',
       executionTime,
     };
   }
 }
 
 // ----------------------------------------------------------------------------
-// Analyse SEO
+// SEO Analysis
 // ----------------------------------------------------------------------------
 
 export async function runSEOAnalysis(input: SEOAnalysisInput): Promise<{
@@ -119,7 +119,7 @@ export async function runSEOAnalysis(input: SEOAnalysisInput): Promise<{
     const executionTime = Date.now() - startTime;
 
     if (!response.ok) {
-      throw new Error(`Erreur HTTP: ${response.status}`);
+      throw new Error(`HTTP Error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -133,14 +133,14 @@ export async function runSEOAnalysis(input: SEOAnalysisInput): Promise<{
     const executionTime = Date.now() - startTime;
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Une erreur est survenue',
+      error: error instanceof Error ? error.message : 'An error occurred',
       executionTime,
     };
   }
 }
 
 // ----------------------------------------------------------------------------
-// Extraction du score depuis les résultats
+// Score extraction from results
 // ----------------------------------------------------------------------------
 
 export function extractScoreFromResults(results: unknown, type: 'reviews' | 'seo'): number | null {

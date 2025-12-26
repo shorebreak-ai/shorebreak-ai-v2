@@ -1,5 +1,5 @@
 // ============================================================================
-// SHOREBREAK AI - HOOKS PERSONNALISÉS
+// SHOREBREAK AI - CUSTOM HOOKS
 // ============================================================================
 
 import { useState, useEffect, useCallback } from 'react';
@@ -15,7 +15,7 @@ import type {
 } from '../types';
 
 // ----------------------------------------------------------------------------
-// Hook: Données utilisateur
+// Hook: User data
 // ----------------------------------------------------------------------------
 
 export function useUser() {
@@ -24,7 +24,7 @@ export function useUser() {
   const [error, setError] = useState<string | null>(null);
 
   const updateProfile = async (updates: Partial<User>) => {
-    if (!profile) return { error: new Error('Non connecté') };
+    if (!profile) return { error: new Error('Not logged in') };
     
     setLoading(true);
     setError(null);
@@ -40,7 +40,7 @@ export function useUser() {
       await refreshProfile();
       return { error: null };
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur inconnue';
+      const message = err instanceof Error ? err.message : 'Unknown error';
       setError(message);
       return { error: err as Error };
     } finally {
@@ -58,7 +58,7 @@ export function useUser() {
 }
 
 // ----------------------------------------------------------------------------
-// Hook: Paramètres utilisateur
+// Hook: User settings
 // ----------------------------------------------------------------------------
 
 export function useUserSettings() {
@@ -80,8 +80,8 @@ export function useUserSettings() {
       if (error) throw error;
       setSettings(data);
     } catch (err) {
-      console.error('Erreur chargement settings:', err);
-      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      console.error('Error loading settings:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -92,7 +92,7 @@ export function useUserSettings() {
   }, [fetchSettings]);
 
   const updateSettings = async (updates: Partial<UserSettings>) => {
-    if (!profile) return { error: new Error('Non connecté') };
+    if (!profile) return { error: new Error('Not logged in') };
 
     try {
       const { error } = await supabase
@@ -141,8 +141,8 @@ export function useAnalyses() {
       if (error) throw error;
       setAnalyses(data || []);
     } catch (err) {
-      console.error('Erreur chargement analyses:', err);
-      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      console.error('Error loading analyses:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -238,8 +238,8 @@ export function useGoogleMetrics() {
       setMetrics(data || []);
       setCurrentMetrics(data?.[0] || null);
     } catch (err) {
-      console.error('Erreur chargement métriques:', err);
-      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      console.error('Error loading metrics:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -250,7 +250,7 @@ export function useGoogleMetrics() {
   }, [fetchMetrics]);
 
   const addMetrics = async (rating: number, reviewCount: number) => {
-    if (!profile) return { error: new Error('Non connecté') };
+    if (!profile) return { error: new Error('Not logged in') };
 
     try {
       const { error } = await supabase
@@ -300,8 +300,8 @@ export function useDashboardStats() {
       if (error) throw error;
       setStats(data);
     } catch (err) {
-      console.error('Erreur chargement stats:', err);
-      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      console.error('Error loading stats:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -341,8 +341,8 @@ export function useAdminStats() {
       if (error) throw error;
       setStats(data);
     } catch (err) {
-      console.error('Erreur chargement stats admin:', err);
-      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      console.error('Error loading stats admin:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -385,8 +385,8 @@ export function useAdminUsers() {
       if (error) throw error;
       setUsers(data || []);
     } catch (err) {
-      console.error('Erreur chargement users:', err);
-      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      console.error('Error loading users:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -448,7 +448,7 @@ export function useDataExport() {
   const [error, setError] = useState<string | null>(null);
 
   const exportData = async () => {
-    if (!profile) return { data: null, error: new Error('Non connecté') };
+    if (!profile) return { data: null, error: new Error('Not logged in') };
 
     setLoading(true);
     setError(null);
@@ -460,7 +460,7 @@ export function useDataExport() {
       if (error) throw error;
       return { data, error: null };
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur inconnue';
+      const message = err instanceof Error ? err.message : 'Unknown error';
       setError(message);
       return { data: null, error: err as Error };
     } finally {
@@ -469,7 +469,7 @@ export function useDataExport() {
   };
 
   const deleteAccount = async () => {
-    if (!profile) return { error: new Error('Non connecté') };
+    if (!profile) return { error: new Error('Not logged in') };
 
     setLoading(true);
     setError(null);
@@ -481,7 +481,7 @@ export function useDataExport() {
       if (error) throw error;
       return { error: null };
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur inconnue';
+      const message = err instanceof Error ? err.message : 'Unknown error';
       setError(message);
       return { error: err as Error };
     } finally {

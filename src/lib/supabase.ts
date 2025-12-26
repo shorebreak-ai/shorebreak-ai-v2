@@ -1,5 +1,5 @@
 // ============================================================================
-// SHOREBREAK AI - CLIENT SUPABASE
+// SHOREBREAK AI - SUPABASE CLIENT
 // ============================================================================
 
 import { createClient } from '@supabase/supabase-js';
@@ -9,8 +9,8 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error(
-    'Variables d\'environnement Supabase manquantes. ' +
-    'Vérifiez que VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY sont définis.'
+    'Missing Supabase environment variables. ' +
+    'Please ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are defined.'
   );
 }
 
