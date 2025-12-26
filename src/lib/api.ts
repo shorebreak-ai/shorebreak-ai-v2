@@ -6,8 +6,8 @@ import type { ReviewAnalysisInput, SEOAnalysisInput } from '../types';
 
 // URLs des webhooks n8n (PRODUCTION)
 const N8N_WEBHOOKS = {
-  reviews: 'https://shorebreak-ai.app.n8n.cloud/webhook/Form-submit',
-  seo: 'https://shorebreak-ai.app.n8n.cloud/webhook/Form-shorebreak-submit',
+  reviews: 'https://shorebreak-ai.app.n8n.cloud/webhook/review-analysis',
+  seo: 'https://shorebreak-ai.app.n8n.cloud/webhook/seo-audit',
 };
 
 // ----------------------------------------------------------------------------
