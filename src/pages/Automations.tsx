@@ -29,6 +29,7 @@ export default function Automations() {
   // Modal state
   const [modalType, setModalType] = useState<'reviews' | 'seo' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingType, setLoadingType] = useState<'reviews' | 'seo'>('reviews');
   const [error, setError] = useState<string | null>(null);
 
   // Form state - Reviews
@@ -87,6 +88,7 @@ export default function Automations() {
     }
 
     setIsLoading(true);
+    setLoadingType(type);
     setModalType(null);
 
     try {
@@ -176,7 +178,7 @@ export default function Automations() {
 
   // Loading Screen
   if (isLoading) {
-    return <LoadingState type={modalType === 'seo' ? 'seo' : 'reviews'} />;
+    return <LoadingState type={loadingType} />;
   }
 
   return (

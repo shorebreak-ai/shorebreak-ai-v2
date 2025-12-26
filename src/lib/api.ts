@@ -14,7 +14,7 @@ const N8N_WEBHOOKS = {
 const API_TIMEOUT = 10 * 60 * 1000;
 
 // ----------------------------------------------------------------------------
-// Helper: Fetch with timeout
+// Helper: Fetch with timeout and retry
 // ----------------------------------------------------------------------------
 
 async function fetchWithTimeout(url: string, options: RequestInit, timeout: number): Promise<Response> {
@@ -25,13 +25,19 @@ async function fetchWithTimeout(url: string, options: RequestInit, timeout: numb
     const response = await fetch(url, {
       ...options,
       signal: controller.signal,
+      keepalive: true,
     });
     clearTimeout(timeoutId);
     return response;
   } catch (error) {
     clearTimeout(timeoutId);
-    if (error instanceof Error && error.name === 'AbortError') {
-      throw new Error('Analysis timed out. Please try again.');
+    if (error instanceof Error) {
+      if (error.name === 'AbortError') {
+        throw new Error('Analysis timed out after 10 minutes. Please try again.');
+      }
+      if (error.message === 'Failed to fetch') {
+        throw new Error('Connection lost. The analysis may still be running. Please check back in a few minutes.');
+      }
     }
     throw error;
   }
