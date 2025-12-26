@@ -10,6 +10,33 @@ const N8N_WEBHOOKS = {
   seo: 'https://shorebreak-ai.app.n8n.cloud/webhook/seo-audit',
 };
 
+// Timeout de 10 minutes pour les analyses longues (en ms)
+const API_TIMEOUT = 10 * 60 * 1000;
+
+// ----------------------------------------------------------------------------
+// Helper: Fetch avec timeout
+// ----------------------------------------------------------------------------
+
+async function fetchWithTimeout(url: string, options: RequestInit, timeout: number): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error('L\'analyse a pris trop de temps. Veuillez réessayer.');
+    }
+    throw error;
+  }
+}
+
 // ----------------------------------------------------------------------------
 // Analyse des Reviews Google
 // ----------------------------------------------------------------------------
@@ -23,17 +50,21 @@ export async function runReviewAnalysis(input: ReviewAnalysisInput): Promise<{
   const startTime = Date.now();
 
   try {
-    const response = await fetch(N8N_WEBHOOKS.reviews, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetchWithTimeout(
+      N8N_WEBHOOKS.reviews,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          google_maps_url: input.google_maps_url,
+          quantity: input.quantity,
+          sort_by: input.sort_by,
+        }),
       },
-      body: JSON.stringify({
-        google_maps_url: input.google_maps_url,
-        quantity: input.quantity,
-        sort_by: input.sort_by,
-      }),
-    });
+      API_TIMEOUT
+    );
 
     const executionTime = Date.now() - startTime;
 
@@ -71,15 +102,19 @@ export async function runSEOAnalysis(input: SEOAnalysisInput): Promise<{
   const startTime = Date.now();
 
   try {
-    const response = await fetch(N8N_WEBHOOKS.seo, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetchWithTimeout(
+      N8N_WEBHOOKS.seo,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          website_url: input.website_url,
+        }),
       },
-      body: JSON.stringify({
-        website_url: input.website_url,
-      }),
-    });
+      API_TIMEOUT
+    );
 
     const executionTime = Date.now() - startTime;
 

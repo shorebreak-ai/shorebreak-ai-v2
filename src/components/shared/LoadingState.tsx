@@ -15,23 +15,27 @@ interface LoadingStateProps {
 }
 
 // ----------------------------------------------------------------------------
-// Phases par défaut
+// Phases par défaut - Adaptées pour analyses de 2-3 minutes en moyenne
 // ----------------------------------------------------------------------------
 
 const defaultPhases = {
   reviews: [
-    { text: 'Connecting to data sources...', duration: 800 },
-    { text: 'Scraping recent reviews...', duration: 1500 },
-    { text: 'Processing natural language models...', duration: 2000 },
-    { text: 'Analyzing sentiment patterns...', duration: 1500 },
-    { text: 'Generating strategic insights...', duration: 1500 },
+    { text: 'Connexion aux sources de données...', duration: 5000 },
+    { text: 'Extraction des avis patients...', duration: 15000 },
+    { text: 'Analyse du sentiment avec IA...', duration: 25000 },
+    { text: 'Identification des tendances clés...', duration: 25000 },
+    { text: 'Génération des insights stratégiques...', duration: 30000 },
+    { text: 'Rédaction du rapport personnalisé...', duration: 40000 },
+    { text: 'Finalisation en cours...', duration: 60000 },
   ],
   seo: [
-    { text: 'Connecting to data sources...', duration: 800 },
-    { text: 'Crawling site structure...', duration: 2000 },
-    { text: 'Analyzing technical SEO factors...', duration: 2000 },
-    { text: 'Evaluating content quality...', duration: 1500 },
-    { text: 'Generating recommendations...', duration: 1500 },
+    { text: 'Connexion au site web...', duration: 5000 },
+    { text: 'Exploration de l\'architecture du site...', duration: 20000 },
+    { text: 'Audit technique SEO en cours...', duration: 30000 },
+    { text: 'Analyse du contenu avec IA...', duration: 35000 },
+    { text: 'Évaluation des facteurs de ranking...', duration: 30000 },
+    { text: 'Génération des recommandations...', duration: 40000 },
+    { text: 'Finalisation du rapport...', duration: 60000 },
   ],
 };
 
@@ -43,18 +47,26 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
   const loadingPhases = phases || defaultPhases[type];
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
     let accumulatedTime = 0;
     const totalTime = loadingPhases.reduce((sum, phase) => sum + phase.duration, 0);
 
-    // Progress bar animation
+    // Progress bar animation - plus lente pour analyses longues
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
-        const newProgress = prev + (100 / (totalTime / 100));
+        // Progression ralentie après 70%
+        const increment = prev < 70 ? 0.3 : 0.05;
+        const newProgress = prev + increment;
         return Math.min(newProgress, 95); // Cap at 95% until complete
       });
-    }, 100);
+    }, 1000);
+
+    // Elapsed time counter
+    const timeInterval = setInterval(() => {
+      setElapsedTime((prev) => prev + 1);
+    }, 1000);
 
     // Phase transitions
     loadingPhases.forEach((phase, index) => {
@@ -66,10 +78,21 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
 
     return () => {
       clearInterval(progressInterval);
+      clearInterval(timeInterval);
     };
   }, [loadingPhases]);
 
   const currentPhase = loadingPhases[currentPhaseIndex];
+
+  // Format elapsed time
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    if (mins > 0) {
+      return `${mins}m ${secs.toString().padStart(2, '0')}s`;
+    }
+    return `${secs}s`;
+  };
 
   return (
     <div className="fixed inset-0 bg-white/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-4">
@@ -87,21 +110,29 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
       </h3>
 
       {/* Subtitle */}
-      <p className="text-slate-500 text-sm text-center mb-8">
-        This usually takes 30-60 seconds. Please do not close this tab.
+      <p className="text-slate-500 text-sm text-center mb-2">
+        L'analyse prend généralement 2 à 3 minutes.
+      </p>
+      <p className="text-slate-400 text-xs text-center mb-8">
+        Ne fermez pas cet onglet • Temps écoulé : {formatTime(elapsedTime)}
       </p>
 
       {/* Progress Bar */}
-      <div className="w-64 h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="w-72 h-2 bg-slate-100 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300 ease-out"
+          className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-1000 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
 
+      {/* Progress percentage */}
+      <p className="text-slate-400 text-xs mt-2">
+        {Math.round(progress)}%
+      </p>
+
       {/* Phase Indicators */}
-      <div className="flex items-center gap-2 mt-6">
-        {loadingPhases.map((_, index) => (
+      <div className="flex items-center gap-1.5 mt-6">
+        {loadingPhases.slice(0, 7).map((_, index) => (
           <div
             key={index}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
