@@ -9,6 +9,7 @@ import {
   Download, 
   Printer, 
   Calendar, 
+  FileText,
   CheckCircle,
   Save,
   Clock
