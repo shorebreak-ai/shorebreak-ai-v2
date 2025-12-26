@@ -51,7 +51,6 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
 
   useEffect(() => {
     let accumulatedTime = 0;
-    const totalTime = loadingPhases.reduce((sum, phase) => sum + phase.duration, 0);
 
     // Progress bar animation - plus lente pour analyses longues
     const progressInterval = setInterval(() => {
