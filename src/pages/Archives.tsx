@@ -123,6 +123,30 @@ export default function Archives() {
                 const summary = analysis.type === 'reviews'
                   ? `Review analysis`
                   : `SEO audit for ${inputData?.website_url?.replace(/https?:\/\//, '').split('/')[0] || 'website'}`;
+                
+                // Extract score from various possible locations
+                let displayScore: number | null = analysis.score;
+                if (!displayScore && analysis.results) {
+                  const results = typeof analysis.results === 'string' 
+                    ? JSON.parse(analysis.results) 
+                    : analysis.results;
+                  
+                  // Check nested result object (from async jobs)
+                  if (results?.result?.score !== undefined) {
+                    displayScore = results.result.score;
+                  } else if (results?.score !== undefined) {
+                    displayScore = results.score;
+                  } else if (Array.isArray(results)) {
+                    // n8n array format
+                    for (const item of results) {
+                      if (item?.score !== undefined) {
+                        displayScore = item.score;
+                        break;
+                      }
+                    }
+                  }
+                }
+                
                 return (
                   <tr key={analysis.id} className="hover:bg-slate-50 transition-colors group">
                     <td className="px-6 py-4">
@@ -148,8 +172,8 @@ export default function Archives() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`font-semibold ${(analysis.score || 0) > 80 ? 'text-emerald-600' : (analysis.score || 0) > 60 ? 'text-amber-600' : 'text-red-600'}`}>
-                        {analysis.score || '—'}/100
+                      <span className={`font-semibold ${(displayScore || 0) > 80 ? 'text-emerald-600' : (displayScore || 0) > 60 ? 'text-amber-600' : 'text-red-600'}`}>
+                        {displayScore ? `${displayScore}/100` : '—/100'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
