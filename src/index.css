@@ -229,6 +229,19 @@ select {
   @apply text-slate-700 text-base leading-relaxed;
 }
 
+/* Key Insight Box */
+.key-insight-box {
+  @apply bg-blue-50 border border-blue-200 rounded-lg p-4;
+}
+
+.key-insight-box h4 {
+  @apply text-sm font-semibold text-blue-900 mb-2;
+}
+
+.key-insight-box p {
+  @apply text-blue-800 text-sm leading-relaxed;
+}
+
 .metrics-overview {
   @apply grid grid-cols-3 gap-4;
 }
@@ -287,6 +300,170 @@ select {
 
 .priority-list li {
   @apply text-sm text-slate-700 leading-relaxed;
+}
+
+/* Patient Search Section */
+.search-analysis {
+  @apply grid md:grid-cols-2 gap-4;
+}
+
+.search-card {
+  @apply rounded-lg border p-4;
+}
+
+.search-card.found {
+  @apply bg-emerald-50 border-emerald-200;
+}
+
+.search-card.found h4 {
+  @apply text-emerald-800 font-semibold text-sm mb-3;
+}
+
+.search-card.missing {
+  @apply bg-red-50 border-red-200;
+}
+
+.search-card.missing h4 {
+  @apply text-red-800 font-semibold text-sm mb-3;
+}
+
+.search-list {
+  @apply space-y-2;
+}
+
+.search-list li {
+  @apply text-sm text-slate-700;
+}
+
+.action-note {
+  @apply text-xs text-slate-600 mt-3 pt-3 border-t border-slate-200;
+}
+
+/* Trust Section */
+.trust-grid {
+  @apply grid md:grid-cols-2 gap-4;
+}
+
+.trust-card {
+  @apply rounded-lg border p-4;
+}
+
+.trust-card.positive {
+  @apply bg-emerald-50 border-emerald-200;
+}
+
+.trust-card.positive h4 {
+  @apply text-emerald-800 font-semibold text-sm mb-3;
+}
+
+.trust-card.negative {
+  @apply bg-amber-50 border-amber-200;
+}
+
+.trust-card.negative h4 {
+  @apply text-amber-800 font-semibold text-sm mb-3;
+}
+
+.trust-list {
+  @apply space-y-2;
+}
+
+.trust-list li {
+  @apply text-sm text-slate-700;
+}
+
+/* Effectiveness Section */
+.effectiveness-analysis {
+  @apply grid md:grid-cols-3 gap-4;
+}
+
+.effectiveness-card {
+  @apply bg-white rounded-lg border border-slate-200 p-4;
+}
+
+.effectiveness-card h4 {
+  @apply text-sm font-semibold text-slate-900 mb-2;
+}
+
+.effectiveness-card p {
+  @apply text-sm text-slate-600 mt-2;
+}
+
+/* Technical Section Title */
+.technical-section-title {
+  @apply text-xl font-bold text-slate-400 mb-6 pb-4 border-b border-slate-200 mt-12;
+}
+
+/* Technical Overview */
+.tech-summary {
+  @apply bg-slate-100 rounded-lg p-3 text-sm text-slate-600;
+}
+
+/* Schema Checklist */
+.checklist {
+  @apply space-y-2;
+}
+
+.check-item {
+  @apply flex items-center gap-3 p-2 rounded-lg;
+}
+
+.check-item.present {
+  @apply bg-emerald-50;
+}
+
+.check-item.missing {
+  @apply bg-red-50;
+}
+
+.check-icon {
+  @apply text-lg font-bold;
+}
+
+.check-item.present .check-icon {
+  @apply text-emerald-600;
+}
+
+.check-item.missing .check-icon {
+  @apply text-red-600;
+}
+
+.check-label {
+  @apply flex-1 text-sm text-slate-700;
+}
+
+.check-status {
+  @apply text-xs font-medium px-2 py-0.5 rounded-full;
+}
+
+.check-item.present .check-status {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.check-item.missing .check-status {
+  @apply bg-red-100 text-red-700;
+}
+
+/* Performance Notes */
+.perf-list {
+  @apply space-y-3;
+}
+
+.perf-item {
+  @apply text-sm text-slate-600 p-3 bg-slate-50 rounded-lg;
+}
+
+/* Recommendation Cards - Updated */
+.rec-current {
+  @apply text-sm text-slate-500 bg-slate-50 p-2 rounded mb-2;
+}
+
+.rec-action {
+  @apply text-sm text-slate-700;
+}
+
+.rec-impact {
+  @apply text-xs text-emerald-600 mt-2 font-medium;
 }
 
 /* Issue Cards */
