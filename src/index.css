@@ -466,6 +466,101 @@ select {
   @apply text-xs text-emerald-600 mt-2 font-medium;
 }
 
+/* ============================================================================
+   REVIEW ANALYSIS SPECIFIC STYLES
+   ============================================================================ */
+
+/* Sentiment Section */
+.sentiment-grid {
+  @apply grid md:grid-cols-2 gap-6;
+}
+
+.sentiment-card {
+  @apply rounded-xl border p-5;
+}
+
+.sentiment-card.positive {
+  @apply bg-emerald-50 border-emerald-200;
+}
+
+.sentiment-card.positive h4 {
+  @apply text-emerald-800 font-semibold text-base mb-4;
+}
+
+.sentiment-card.negative {
+  @apply bg-red-50 border-red-200;
+}
+
+.sentiment-card.negative h4 {
+  @apply text-red-800 font-semibold text-base mb-4;
+}
+
+.sentiment-list {
+  @apply space-y-4;
+}
+
+.sentiment-list li {
+  @apply pb-4 border-b border-slate-200 last:border-0 last:pb-0;
+}
+
+.sentiment-list li strong {
+  @apply block text-slate-900 mb-1;
+}
+
+.sentiment-list .quote {
+  @apply text-sm text-slate-600 italic bg-white/50 p-2 rounded mb-2;
+}
+
+.sentiment-list .frequency {
+  @apply text-xs text-slate-500;
+}
+
+/* Reputation Grid */
+.reputation-grid {
+  @apply grid md:grid-cols-3 gap-4;
+}
+
+.reputation-card {
+  @apply bg-white rounded-lg border border-slate-200 p-4;
+}
+
+.reputation-card h4 {
+  @apply text-sm font-semibold text-slate-900 mb-2;
+}
+
+.reputation-card p {
+  @apply text-sm text-slate-600 mt-2;
+}
+
+/* Strategy Section */
+.strategy-grid {
+  @apply grid md:grid-cols-2 gap-6;
+}
+
+.strategy-card {
+  @apply bg-white rounded-xl border border-slate-200 p-5;
+}
+
+.strategy-card h4 {
+  @apply text-base font-semibold text-slate-900 mb-2;
+}
+
+.strategy-card > p {
+  @apply text-sm text-slate-600 mb-4;
+}
+
+.example-response {
+  @apply bg-slate-50 rounded-lg p-4 mt-3;
+}
+
+.example-response strong {
+  @apply text-xs text-slate-500 uppercase tracking-wide block mb-2;
+}
+
+.example-response .template {
+  @apply text-sm text-slate-700 italic;
+}
+
 /* Issue Cards */
 .issue-card {
   @apply bg-white border border-slate-200 rounded-lg mb-4 overflow-hidden transition-shadow hover:shadow-md;
