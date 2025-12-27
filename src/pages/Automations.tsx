@@ -34,7 +34,7 @@ export default function Automations() {
 
   // Form state - Reviews
   const [mapUrl, setMapUrl] = useState(profile?.google_maps_url || '');
-  const [reviewPeriod, setReviewPeriod] = useState('6months');
+  const [reviewPeriod, setReviewPeriod] = useState<'3months' | '6months' | '12months' | 'all'>('6months');
 
   // Form state - SEO
   const [websiteUrl, setWebsiteUrl] = useState(profile?.website_url || '');
@@ -228,12 +228,12 @@ export default function Automations() {
                     <select
                       className="w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
                       value={reviewPeriod}
-                      onChange={(e) => setReviewPeriod(e.target.value)}
+                      onChange={(e) => setReviewPeriod(e.target.value as '3months' | '6months' | '12months' | 'all')}
                     >
                       <option value="3months">Last 3 months</option>
                       <option value="6months">Last 6 months</option>
                       <option value="12months">Last 12 months</option>
-                      <option value="all">All reviews (max 100)</option>
+                      <option value="all">All reviews</option>
                     </select>
                     <p className="text-xs text-slate-500 mt-1.5">
                       Recent reviews give the most accurate picture of your current reputation.
