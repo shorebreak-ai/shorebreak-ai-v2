@@ -15,27 +15,29 @@ interface LoadingStateProps {
 }
 
 // ----------------------------------------------------------------------------
-// Phases par défaut - Adaptées pour analyses de 2-3 minutes en moyenne
+// Phases par défaut - Adaptées pour analyses de 5-10 minutes
 // ----------------------------------------------------------------------------
 
 const defaultPhases = {
   reviews: [
-    { text: 'Connecting to data sources...', duration: 5000 },
-    { text: 'Extracting patient reviews...', duration: 15000 },
-    { text: 'Running AI sentiment analysis...', duration: 25000 },
-    { text: 'Identifying key trends...', duration: 25000 },
-    { text: 'Generating strategic insights...', duration: 30000 },
-    { text: 'Writing personalized report...', duration: 40000 },
-    { text: 'Finalizing analysis...', duration: 60000 },
+    { text: 'Connecting to Google Maps...', duration: 10000 },
+    { text: 'Extracting patient reviews...', duration: 30000 },
+    { text: 'Processing review content...', duration: 45000 },
+    { text: 'Running AI sentiment analysis...', duration: 60000 },
+    { text: 'Identifying patterns and trends...', duration: 60000 },
+    { text: 'Generating strategic insights...', duration: 90000 },
+    { text: 'Writing personalized report...', duration: 120000 },
+    { text: 'Finalizing analysis...', duration: 180000 },
   ],
   seo: [
-    { text: 'Connecting to website...', duration: 5000 },
-    { text: 'Crawling site architecture...', duration: 20000 },
-    { text: 'Running technical SEO audit...', duration: 30000 },
-    { text: 'Analyzing content with AI...', duration: 35000 },
-    { text: 'Evaluating ranking factors...', duration: 30000 },
-    { text: 'Generating recommendations...', duration: 40000 },
-    { text: 'Finalizing report...', duration: 60000 },
+    { text: 'Connecting to website...', duration: 10000 },
+    { text: 'Crawling site architecture...', duration: 30000 },
+    { text: 'Analyzing page content...', duration: 60000 },
+    { text: 'Running technical SEO audit...', duration: 90000 },
+    { text: 'Evaluating content quality...', duration: 90000 },
+    { text: 'Generating recommendations...', duration: 120000 },
+    { text: 'Writing comprehensive report...', duration: 120000 },
+    { text: 'Finalizing audit...', duration: 180000 },
   ],
 };
 
@@ -52,13 +54,16 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
   useEffect(() => {
     let accumulatedTime = 0;
 
-    // Progress bar animation - plus lente pour analyses longues
+    // Progress bar animation - très lente pour analyses longues (5-10 min)
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
-        // Progression ralentie après 70%
-        const increment = prev < 70 ? 0.3 : 0.05;
+        // Progression très ralentie
+        let increment = 0.15; // Base: ~10 min pour atteindre 90%
+        if (prev > 50) increment = 0.1;
+        if (prev > 70) increment = 0.05;
+        if (prev > 85) increment = 0.02;
         const newProgress = prev + increment;
-        return Math.min(newProgress, 95); // Cap at 95% until complete
+        return Math.min(newProgress, 92); // Cap at 92% until complete
       });
     }, 1000);
 
@@ -110,7 +115,7 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
 
       {/* Subtitle */}
       <p className="text-slate-500 text-sm text-center mb-2">
-        Analysis typically takes 2 to 3 minutes.
+        Deep analysis typically takes 5 to 10 minutes.
       </p>
       <p className="text-slate-400 text-xs text-center mb-8">
         Please don't close this tab • Elapsed: {formatTime(elapsedTime)}
@@ -131,7 +136,7 @@ export function LoadingState({ phases, type = 'reviews' }: LoadingStateProps) {
 
       {/* Phase Indicators */}
       <div className="flex items-center gap-1.5 mt-6">
-        {loadingPhases.slice(0, 7).map((_, index) => (
+        {loadingPhases.slice(0, 8).map((_, index) => (
           <div
             key={index}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
