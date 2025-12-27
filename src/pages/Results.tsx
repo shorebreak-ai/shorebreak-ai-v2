@@ -145,7 +145,24 @@ export default function Results() {
   }
 
   // Extract data from n8n response
-  const results = analysis.results;
+  // Handle both direct results and results from analysis_jobs table
+  let rawResults = analysis.results;
+  
+  // If results is a string (JSON), parse it
+  if (typeof rawResults === 'string') {
+    try {
+      rawResults = JSON.parse(rawResults);
+    } catch (e) {
+      console.error('Failed to parse results string:', e);
+    }
+  }
+  
+  // If the data came from analysis_jobs, it might be wrapped in a 'result' key
+  if (rawResults && rawResults.result) {
+    rawResults = rawResults.result;
+  }
+  
+  const results = rawResults;
   const type = analysis.type === 'seo' ? 'SEO & Visibility Audit' : 'Review Sentiment Analysis';
   const date = formatDate(analysis.created_at);
   
@@ -154,59 +171,43 @@ export default function Results() {
   let contentSections: string[] = [];
   let htmlContent: string = '';
 
-  if (Array.isArray(results)) {
-    // n8n returns an array with multiple items
-    results.forEach((item: any) => {
-      if (item.score !== undefined) {
-        score = item.score;
-      }
-      // output can be an array of markdown strings OR a single HTML string
-      if (item.output) {
-        if (Array.isArray(item.output)) {
-          contentSections = [...contentSections, ...item.output];
-        } else if (typeof item.output === 'string') {
-          // output is a single HTML string (Reviews case)
-          if (item.output.trim().startsWith('<!DOCTYPE') || item.output.trim().startsWith('<')) {
-            // It's HTML content - extract just the body
-            const bodyMatch = item.output.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-            if (bodyMatch) {
-              htmlContent = bodyMatch[1];
-            } else {
-              htmlContent = item.output;
-            }
-          } else {
-            // It's markdown
-            contentSections.push(item.output);
-          }
-        }
-      }
-      if (item.data && item.data.trim() !== '') {
-        htmlContent = item.data;
-      }
-    });
-  } else if (results && typeof results === 'object') {
-    // Single object response
-    score = results.score ?? results.overall_score ?? null;
-    if (results.output) {
-      if (Array.isArray(results.output)) {
-        contentSections = results.output;
-      } else if (typeof results.output === 'string') {
-        // output is a single HTML string
-        if (results.output.trim().startsWith('<!DOCTYPE') || results.output.trim().startsWith('<')) {
-          const bodyMatch = results.output.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  // Helper to extract content from an item
+  const extractContent = (item: any) => {
+    if (item.score !== undefined) {
+      score = item.score;
+    }
+    // output can be an array of markdown strings OR a single HTML string
+    if (item.output) {
+      if (Array.isArray(item.output)) {
+        contentSections = [...contentSections, ...item.output];
+      } else if (typeof item.output === 'string') {
+        // output is a single HTML string (Reviews case)
+        if (item.output.trim().startsWith('<!DOCTYPE') || item.output.trim().startsWith('<')) {
+          // It's HTML content - extract just the body
+          const bodyMatch = item.output.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
           if (bodyMatch) {
             htmlContent = bodyMatch[1];
           } else {
-            htmlContent = results.output;
+            htmlContent = item.output;
           }
         } else {
-          contentSections.push(results.output);
+          // It's markdown
+          contentSections.push(item.output);
         }
       }
     }
-    if (results.data) {
-      htmlContent = results.data;
+    if (item.data && typeof item.data === 'string' && item.data.trim() !== '') {
+      // data contains HTML content
+      htmlContent = item.data;
     }
+  };
+
+  if (Array.isArray(results)) {
+    // n8n returns an array with multiple items
+    results.forEach((item: any) => extractContent(item));
+  } else if (results && typeof results === 'object') {
+    // Single object response
+    extractContent(results);
   }
 
   // Fallback score
