@@ -177,3 +177,341 @@ select {
 .recharts-default-tooltip {
   @apply rounded-lg shadow-lg border border-slate-200;
 }
+
+/* ============================================================================
+   AUDIT REPORT STYLES
+   Professional styling for SEO audit reports
+   ============================================================================ */
+
+.audit-report {
+  @apply space-y-10;
+}
+
+.audit-report h1 {
+  @apply text-2xl font-bold text-slate-900 mb-6 pb-3 border-b-2 border-slate-200;
+}
+
+/* Section Headers */
+.audit-section {
+  @apply mb-10;
+}
+
+.section-header {
+  @apply mb-6;
+}
+
+.section-header h2 {
+  @apply text-xl font-bold text-slate-900 mb-2;
+}
+
+.section-desc {
+  @apply text-slate-500 text-sm;
+}
+
+/* Issue Cards */
+.issue-card {
+  @apply bg-white border border-slate-200 rounded-lg mb-4 overflow-hidden transition-shadow hover:shadow-md;
+}
+
+.issue-card.priority-critical {
+  @apply border-l-4 border-l-red-500;
+}
+
+.issue-card.priority-medium {
+  @apply border-l-4 border-l-amber-500;
+}
+
+.issue-card.priority-low {
+  @apply border-l-4 border-l-blue-500;
+}
+
+.issue-header {
+  @apply flex items-center gap-3 p-4 bg-slate-50 border-b border-slate-100;
+}
+
+.issue-num {
+  @apply w-7 h-7 rounded-full bg-slate-200 text-slate-700 text-sm font-semibold flex items-center justify-center flex-shrink-0;
+}
+
+.priority-critical .issue-num {
+  @apply bg-red-100 text-red-700;
+}
+
+.priority-medium .issue-num {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.priority-low .issue-num {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.issue-header h3 {
+  @apply text-base font-semibold text-slate-900 flex-1;
+}
+
+.impact-badge {
+  @apply text-xs font-medium px-2.5 py-1 rounded-full flex-shrink-0;
+}
+
+.impact-badge.high {
+  @apply bg-red-100 text-red-700;
+}
+
+.impact-badge.medium {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.impact-badge.low {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.issue-content {
+  @apply p-4 space-y-4;
+}
+
+.issue-row {
+  @apply flex flex-col gap-1;
+}
+
+.issue-row .label {
+  @apply text-xs font-semibold text-slate-500 uppercase tracking-wide;
+}
+
+.issue-row p {
+  @apply text-sm text-slate-700 leading-relaxed;
+}
+
+.code-block {
+  @apply mt-3 pt-3 border-t border-slate-100;
+}
+
+.code-block .label {
+  @apply text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-2;
+}
+
+.code-block code {
+  @apply block bg-slate-900 text-slate-100 text-xs font-mono p-3 rounded-lg overflow-x-auto whitespace-pre-wrap;
+}
+
+/* Analysis Grid (Content Audit) */
+.analysis-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-4 mb-8;
+}
+
+.analysis-card {
+  @apply bg-white border border-slate-200 rounded-lg p-4;
+}
+
+.analysis-card h4 {
+  @apply text-sm font-semibold text-slate-900 mb-3;
+}
+
+.score-indicator {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium mb-3;
+}
+
+.score-indicator.good {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.score-indicator.moderate {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.score-indicator.poor {
+  @apply bg-red-100 text-red-700;
+}
+
+.findings-list {
+  @apply space-y-2 text-sm;
+}
+
+.finding-positive {
+  @apply text-emerald-700 pl-4 relative;
+}
+
+.finding-positive::before {
+  content: "+";
+  @apply absolute left-0 font-bold;
+}
+
+.finding-negative {
+  @apply text-red-700 pl-4 relative;
+}
+
+.finding-negative::before {
+  content: "−";
+  @apply absolute left-0 font-bold;
+}
+
+/* Keyword Table */
+.keyword-table {
+  @apply space-y-2;
+}
+
+.keyword-row {
+  @apply flex items-center gap-2 text-xs;
+}
+
+.keyword-row .keyword {
+  @apply flex-1 font-medium text-slate-700;
+}
+
+.keyword-row .volume {
+  @apply text-slate-500;
+}
+
+.keyword-row .status {
+  @apply px-2 py-0.5 rounded-full;
+}
+
+.keyword-row .status.present {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.keyword-row .status.missing {
+  @apply bg-red-100 text-red-700;
+}
+
+.analysis-note {
+  @apply text-sm text-slate-600;
+}
+
+/* Recommendations */
+.recommendations-group {
+  @apply mb-6;
+}
+
+.priority-label {
+  @apply text-sm font-semibold mb-3 flex items-center gap-2;
+}
+
+.priority-label.high {
+  @apply text-red-700;
+}
+
+.priority-label.high::before {
+  content: "";
+  @apply w-2 h-2 rounded-full bg-red-500;
+}
+
+.priority-label.medium {
+  @apply text-amber-700;
+}
+
+.priority-label.medium::before {
+  content: "";
+  @apply w-2 h-2 rounded-full bg-amber-500;
+}
+
+.priority-label.low {
+  @apply text-blue-700;
+}
+
+.priority-label.low::before {
+  content: "";
+  @apply w-2 h-2 rounded-full bg-blue-500;
+}
+
+.recommendation-card {
+  @apply bg-white border border-slate-200 rounded-lg mb-3 overflow-hidden;
+}
+
+.rec-header {
+  @apply flex items-center gap-3 p-4 bg-slate-50 border-b border-slate-100;
+}
+
+.rec-num {
+  @apply w-6 h-6 rounded-full bg-slate-200 text-slate-600 text-xs font-semibold flex items-center justify-center;
+}
+
+.rec-header h4 {
+  @apply text-sm font-semibold text-slate-900 flex-1;
+}
+
+.difficulty {
+  @apply text-xs px-2 py-0.5 rounded-full;
+}
+
+.difficulty.easy {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.difficulty.medium {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.difficulty.complex {
+  @apply bg-red-100 text-red-700;
+}
+
+.rec-content {
+  @apply p-4 space-y-2;
+}
+
+.rec-action {
+  @apply text-sm text-slate-700;
+}
+
+.rec-impact {
+  @apply text-xs text-slate-500 italic;
+}
+
+/* Action Plan Timeline */
+.timeline {
+  @apply space-y-4;
+}
+
+.timeline-phase {
+  @apply bg-white border border-slate-200 rounded-lg p-4;
+}
+
+.timeline-phase h3 {
+  @apply text-sm font-semibold text-slate-900 mb-3 pb-2 border-b border-slate-100;
+}
+
+.timeline-phase ul {
+  @apply space-y-2;
+}
+
+.timeline-phase li {
+  @apply text-sm text-slate-600 pl-4 relative;
+}
+
+.timeline-phase li::before {
+  content: "→";
+  @apply absolute left-0 text-slate-400;
+}
+
+/* Report Parts */
+.report-part {
+  @apply mb-12;
+}
+
+.report-part.technical h1 {
+  @apply text-blue-900;
+}
+
+.report-part.content h1 {
+  @apply text-emerald-900;
+}
+
+/* Print Optimizations for Audit Report */
+@media print {
+  .audit-report {
+    @apply text-black;
+  }
+  
+  .issue-card {
+    break-inside: avoid;
+    @apply shadow-none border-slate-300;
+  }
+  
+  .analysis-card {
+    break-inside: avoid;
+  }
+  
+  .recommendation-card {
+    break-inside: avoid;
+  }
+}
