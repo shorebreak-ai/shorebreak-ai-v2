@@ -72,8 +72,7 @@ export interface ActivityLog {
 
 export interface ReviewAnalysisInput {
   google_maps_url: string;
-  quantity: number;
-  sort_by: 'newest' | 'highest' | 'lowest';
+  period: '3months' | '6months' | '12months' | 'all';
 }
 
 export interface SEOAnalysisInput {
@@ -200,8 +199,7 @@ export interface MetricCardData {
 
 export interface ReviewFormData {
   google_maps_url: string;
-  quantity: string;
-  sort_by: string;
+  period: string;
 }
 
 export interface SEOFormData {

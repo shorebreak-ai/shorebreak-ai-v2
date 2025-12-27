@@ -34,8 +34,7 @@ export default function Automations() {
 
   // Form state - Reviews
   const [mapUrl, setMapUrl] = useState(profile?.google_maps_url || '');
-  const [reviewCount, setReviewCount] = useState('50');
-  const [sortType, setSortType] = useState('newest');
+  const [reviewPeriod, setReviewPeriod] = useState('6months');
 
   // Form state - SEO
   const [websiteUrl, setWebsiteUrl] = useState(profile?.website_url || '');
@@ -97,8 +96,7 @@ export default function Automations() {
       if (type === 'reviews') {
         result = await runReviewAnalysis({
           google_maps_url: mapUrl,
-          quantity: parseInt(reviewCount),
-          sort_by: sortType as 'newest' | 'highest' | 'lowest',
+          period: reviewPeriod,
         });
       } else {
         result = await runSEOAnalysis({
@@ -130,12 +128,12 @@ export default function Automations() {
         user_id: profile!.id,
         type,
         input_data: type === 'reviews' 
-          ? { google_maps_url: mapUrl, quantity: reviewCount, sort_by: sortType }
+          ? { google_maps_url: mapUrl, period: reviewPeriod }
           : { website_url: websiteUrl },
         results: result.data as Record<string, unknown>,
         score,
         execution_time_ms: result.executionTime || null,
-        tokens_used: null, // Will be added when n8n returns this
+        tokens_used: null,
       });
 
       if (saveError) {
@@ -223,36 +221,23 @@ export default function Automations() {
                     onChange={(e) => setMapUrl(e.target.value)}
                     helperText="Paste the full URL of your Google Maps listing"
                   />
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                        Review Depth
-                      </label>
-                      <select
-                        className="w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
-                        value={reviewCount}
-                        onChange={(e) => setReviewCount(e.target.value)}
-                      >
-                        <option value="10">Last 10 Reviews</option>
-                        <option value="25">Last 25 Reviews</option>
-                        <option value="50">Last 50 Reviews</option>
-                        <option value="100">Last 100 Reviews</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                        Sort By
-                      </label>
-                      <select
-                        className="w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
-                        value={sortType}
-                        onChange={(e) => setSortType(e.target.value)}
-                      >
-                        <option value="newest">Newest First</option>
-                        <option value="highest">Highest Rated</option>
-                        <option value="lowest">Lowest Rated</option>
-                      </select>
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                      Analysis Period
+                    </label>
+                    <select
+                      className="w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                      value={reviewPeriod}
+                      onChange={(e) => setReviewPeriod(e.target.value)}
+                    >
+                      <option value="3months">Last 3 months</option>
+                      <option value="6months">Last 6 months</option>
+                      <option value="12months">Last 12 months</option>
+                      <option value="all">All reviews (max 100)</option>
+                    </select>
+                    <p className="text-xs text-slate-500 mt-1.5">
+                      Recent reviews give the most accurate picture of your current reputation.
+                    </p>
                   </div>
                 </>
               ) : (

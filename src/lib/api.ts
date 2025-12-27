@@ -198,8 +198,7 @@ export async function runReviewAnalysis(
   // 1. Create job in database
   const { jobId, error: createError } = await createAnalysisJob('reviews', {
     google_maps_url: input.google_maps_url,
-    quantity: input.quantity,
-    sort_by: input.sort_by,
+    period: input.period,
   });
 
   if (createError || !jobId) {
@@ -213,8 +212,7 @@ export async function runReviewAnalysis(
   const webhookResult = await triggerWebhook(N8N_WEBHOOKS.reviews, {
     job_id: jobId,
     google_maps_url: input.google_maps_url,
-    quantity: input.quantity,
-    sort_by: input.sort_by,
+    period: input.period,
   });
 
   if (!webhookResult.success) {
